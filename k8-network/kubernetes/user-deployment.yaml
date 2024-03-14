@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: user-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-app
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      containers:
+        - name: user-app
+          image: premgowda98/user-app:latest
+          env:
+            - name: AUTH_ADDR
+              value: localhost:8501
+        - name: auth-app
+          image: premgowda98/auth-app:latest

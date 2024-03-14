@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment #https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#deployment-v1-apps
+metadata: 
+  name: kub-second-app #Deployment name can be used to delete deployment
+spec:
+  replicas: 1
+  selector: # declaring deployment to have control over the pod
+    matchLabels:
+      app: kub-second-app # will control all pods which have this key value pair
+    # matchExpressions: # more control for selectors
+    #   - {key: app, operator: In, value: [kub-second-app, 'kub-first-app']}
+  template: #pods should be defined here
+    metadata:
+      labels:
+        app: kub-second-app
+    spec:
+      containers:
+        - name:  kub-second-app-container
+          image: premgowda98/kub-first-app # using same docker image
+          imagePolicy: Always # always pulls the images
+          volumeMounts:
+            - mountPath: /app/story # from workdir mentioned in Dockerfile
+              name: pod-volume
+          livenessProbe: # configuring how to check liveness of the container
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 5
+          env: # env variables
+            - name: SOMETHING_VAR
+              # value: 'dsgsfdgsgsgsdar332rwwerthghtgstgh' # seting env variables straight forward
+              valueFrom: # use this when environment.yaml is used
+                configMapKeyRef:
+                  name: env-data
+                  key: SOMETHING_VAR
+      volumes:
+        - name: pod-volume
+          # emptyDir: {} # persists container restrat but not pod restart  https://kubernetes.io/docs/concepts/storage/volumes/ will not work if >1 pod is present instead use hostpath
+          # hostpath: # will not work for different Node, this is Node specific
+          #   path: /data-k8 # path on host machine (Node)
+          #   type: DirectoryOrCreate
+          # csi: #can attach any file system with plugins/integrations
+          persistentVolumeClaim: # for persistent volumes
+            claimName: host-pvc # from host-path-presistent-volume-claim.yaml
+

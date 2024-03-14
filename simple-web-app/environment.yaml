@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-data
+data:
+  SOMETHING_VAR: 'asfasgfsgsagwertgf'
+  SOMETHING_WHERE: 'Production'
+
+
+# to apply this env use kbectl apply -f=environment.yaml

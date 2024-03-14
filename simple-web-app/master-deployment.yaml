@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service # service controls pods and not the deployments
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: kub-second-app
+  ports:
+    - protocol: 'TCP'
+      port: 3005 # expose
+      targetPort: 8080 # of container
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment #https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#deployment-v1-apps
+metadata: 
+  name: kub-second-app #Deployment name can be used to delete deployment
+spec:
+  replicas: 1
+  selector: # declaring deployment to have control over the pod
+    matchLabels:
+      app: kub-second-app # will control all pods which have this key value pair
+  template: # pods should be defined here
+    metadata:
+      labels:
+        app: kub-second-app
+    spec:
+      containers:
+        - name:  kub-second-app-container
+          image: premgowda98/kub-first-app # using same docker image
