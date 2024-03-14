@@ -4,7 +4,7 @@ const axios = require('axios');
 const app = express()
 
 app.get('/auth', (req,res)=>{
-	res.status(200).json({token: 'yes'});
+	return res.json({token: 'yes'});
 }
 );
 

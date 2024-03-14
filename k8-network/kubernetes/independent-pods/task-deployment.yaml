@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: task-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-app
+  template:
+    metadata:
+      labels:
+        app: task-app
+    spec:
+      containers:
+        - name: task-app
+          image: premgowda98/task-app:latest
+          env:
+            - name: AUTH_ADDR
+              value: 'auth-app-service.default:8501' #accessing user domain name offered by k8s by using service name

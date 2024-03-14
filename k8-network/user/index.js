@@ -10,8 +10,8 @@ app.post('/login', async (req,res)=>{
 
 	if (password=='123'){
 		const response = await axios.get(`http://${process.env.AUTH_ADDR}/auth`)
-		if (response){
-			res.json({message: 'Verified and also auth verified'});
+		if (response.status===200){
+			return res.json({message: 'Verified and also auth verified'});
 		}
 		res.json({message: 'Verified'});
 	} else {

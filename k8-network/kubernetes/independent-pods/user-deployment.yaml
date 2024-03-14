@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: user-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-app
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      containers:
+        - name: user-app
+          image: premgowda98/user-app:latest
+          env:
+            - name: AUTH_ADDR
+              # value: 10.108.119.207:8501
+              value: 'auth-app-service.default:8501' #accessing user domain name offered by k8s by using service name
