@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: premgowda98/backend:latest
+    build: ./backend
+    ports:
+      - 8501:8501
+    container_name: backend-cont
+    environment:
+      PAYMENT_URL: "payment-cont:8502"
+  payment:
+    image: premgowda98/payment:latest
+    build: ./payment
+    # ports:
+    #   - 8502:8502
+    container_name: payment-cont
+    environment:
+      BACKEND_URL: "backend-cont:8501" 

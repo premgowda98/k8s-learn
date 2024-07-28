@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: mybackend
+        image: "docker.io/premgowda98/backend:latest"
+        ports:
+        - containerPort: 8501
+        imagePullPolicy: Always
+        env:
+        - name: PAYMENT_URL
+          value: "localhost:8502"
+        resources:
+          limits: 
+            memory: "256Mi"
+            cpu: "2500m"
+      - name: mypayment
+        image: "docker.io/premgowda98/payment:latest"
+        ports:
+        - containerPort: 8502
+        imagePullPolicy: Always
+        env:
+        - name: BACKEND_URL
+          value: "localhost:8501"
+        resources:
+          limits: 
+            memory: "256Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  # type: LoadBalancer
+  selector:
+    app: myapp
+  ports:
+  - name: "backend-port"
+    port: 8501
+    targetPort: 8501
+  - name: "payment-port"
+    port: 8502
+    targetPort: 8502
