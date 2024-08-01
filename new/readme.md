@@ -8,3 +8,4 @@
 6. `kubectl proxy` 
 7. `kubectl get all`
 8. `kubectl get endpoints`
+9. `kubectl label node <nodename> <labelname>-` removes label
