@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app.kubernetes.io/name: MyApp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox:1.28
+    env:
+    - name: FIRSTNAME
+      value: "Prem"
+    - name: SECONDNAME
+      valueFrom:
+        configMapKeyRef:
+          name: createdconfig
+          key: secondname
+    envFrom:
+    - configMapRef:
+        name: createdconfig
+      
+    command: ['sh', '-c', 'echo The app is running! $FIRSTNAME $SECONDNAME $somethingforfile && sleep 3600']
