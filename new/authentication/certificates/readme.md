@@ -19,4 +19,7 @@
     2. If I create a user using roles in k8s, then they will not be able to approve this request
 11. Now we need to get the certificate for the user and then again decode and give it to the user who requested the certificate. Then they can use this to connect to the cluster using kubectl. `kubectl get csr mycsr -o yaml > issuedcert.yml`
 12. Copy the key from request field and then `echo "paste value" | base64 -d` and share this to the user
+13. Also using the certificate create, user.crt which will be required when setting context and running commands.
+14. `kubectl get csr mycsr -o jsonpath='{.status.certificate}' | base64 --decode | tr -d "\n" > mycsr.crt`
+15. This certificate will be valid only for 1 day, because in csr.yml when we requested for acess using CSR and key we set those to 86400.  
 
