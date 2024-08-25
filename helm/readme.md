@@ -25,8 +25,26 @@ Helm is widely known as "the package manager for Kubernetes".
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
-### Helloworld
+### Commands
 
-```bash
-helm create helloworld
-```
+1. To create folder structure `helm create <name>`
+2. To install this on the cluster `helm install <install name> <created name>`. This will be version controlled. 
+3. To update the deployemnt `helm upgrade <install name> <created name>`
+4. To rollback the deployemnt `helm rollback <install name> <version number>` even the rollback will be new version
+5. To dry run `helm install <install name> --debug --dry-run <created name>`. This validates by connecting with the Kuberenetes API server
+6. `helm template` even this does the validation but will not connect with kuberenetes api server.
+7. `helm lint` check for errors or misconfiguration.
+8. `helm unistall <install name>`
+
+
+## [Helm File](https://jhooq.com/helmfile-manage-helmchart/)
+
+Helmfile is a declarative spec for deploying helm charts.
+
+## Helm repo
+
+## Helm Hooks
+
+Simillar to git hooks
+
+## Helm test
