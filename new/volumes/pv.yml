@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes: 
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/premgowda/HDD/disk2/Projects/Devops/k8s-learn/new/volumes/local-volume"
