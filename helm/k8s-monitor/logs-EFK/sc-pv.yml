@@ -1,0 +1,47 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-storage
+  namespace: logging
+provisioner: kubernetes.io/no-provisioner # means PV will not be dynamically provisioned
+volumeBindingMode: WaitForFirstConsumer # will be bounded once pod consumes pvc
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elk-pv
+  namespace: logging
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /opt/elasticsearch
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-worker1
+          - k8s-worker2
+---
+# If specify PVC then Volume Claim Template has to be removed from helm chart install
+# Because Volume Claim Template will dynamically create a PVC
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: elk-pv-claim
+  namespace: logging
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 2Gi
