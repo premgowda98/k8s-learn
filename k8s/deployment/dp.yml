@@ -1,13 +1,17 @@
 apiVersion: apps/v1
 kind:  Deployment
+# this labesl and metadta is for deployment
 metadata:
   name: nginx-deploy
   labels:
     env: demo
 spec:
+  selector: 
+    matchLabels: # The selector looks for Pods with the label 'env: demo'
+      env: demo
   template:
     metadata:
-      labels:
+      labels:   # this metadata is for pods and this labels are used in service
         env: demo
       name: nginx
     spec:
@@ -17,6 +21,3 @@ spec:
         ports:
         - containerPort: 80
   replicas: 3
-  selector:
-    matchLabels:
-      env: demo
