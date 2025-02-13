@@ -1,5 +1,7 @@
 ## Certificates
 
+[Resource](https://youtu.be/puiM8HZ3v_8?list=PLZorYoZY3amclAf4Wg9n7PJQbGsq5cSDw)
+
 1. Just like certificate for https connection between the client and server.
 2. Certificates are required for communication between client, api server and again from api server to other componenets like kubelete, etcd, scheduler, control manager.
 
