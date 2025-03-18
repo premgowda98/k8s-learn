@@ -58,6 +58,8 @@
 3. Install harness cli and connect to api-key
 4. Connectors
     1. K8s Connector, Github Connector
+    2. Each github connector can be attached to the account or a specific repo
+    3. If account is specified any repo can be pulled
 5. Services
     1. Includes the service name
     2. Service Definition
@@ -68,3 +70,8 @@
     1. Includes production or Pre Production
     2. Infrastructure Definition includes the the namespace of the k8s, vms, shell, aws lambda
         1. Requires k8s connector 
+7. Pipeline
+    1. Can specify pipeline with multiple stages
+    2. Deploy stage can takes k8s, lambda, shell 
+        1. Service has to be selected
+        2. Environment has to be chosen
