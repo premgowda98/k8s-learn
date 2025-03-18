@@ -23,7 +23,7 @@ commonName           = 192.168.0.112
 subjectAltName       = @alt_names
 
 [alt_names]
-IP.1 = 192.168.0.112
+IP.1 = 192.168.0.116
 
 ```
     2. `openssl req -x509 -newkey rsa:2048 -keyout registry.key -out registry.crt -days 365 -config openssl.conf`
