@@ -1,12 +1,12 @@
 pipeline:
-  name: sample-app-nginx-git
+  name: sample-app-nginx
   identifier: sampleappnginx
   projectIdentifier: default_project
   orgIdentifier: default
   tags: {}
   stages:
     - stage:
-        name: Test Approve
+        name: Test Approve VS
         identifier: Test_Approve
         description: ""
         type: Approval
