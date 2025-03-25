@@ -1,0 +1,24 @@
+service:
+  name: sample-app-nginx
+  identifier: sampleappnginx
+  orgIdentifier: default
+  projectIdentifier: default_project
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: k8slearnsampleapp
+            type: Kustomize
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: sampleappnginx
+                  gitFetchType: Branch
+                  folderPath: harness/kustomize
+                  repoName: k8s-learn
+                  branch: main
+              pluginPath: ""
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+    type: Kubernetes
