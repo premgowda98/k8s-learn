@@ -1,0 +1,23 @@
+pipeline:
+  name: created_pipeline_with_template
+  identifier: created_pipeline_with_template
+  tags: {}
+  template:
+    templateRef: template
+    versionLabel: "0.1"
+    templateInputs:
+      stages:
+        - stage:
+            identifier: template_stage
+            type: Deployment
+            spec:
+              environment:
+                environmentRef: <+input>
+                environmentInputs: <+input>
+                serviceOverrideInputs: <+input>
+                infrastructureDefinitions: <+input>
+              service:
+                serviceRef: <+input>
+                serviceInputs: <+input>
+  projectIdentifier: default_project
+  orgIdentifier: default
