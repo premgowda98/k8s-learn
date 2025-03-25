@@ -1,0 +1,13 @@
+infrastructureDefinition:
+  name: k8s-test-dev
+  identifier: k8stestdev
+  orgIdentifier: default
+  projectIdentifier: default_project
+  environmentRef: testdev
+  deploymentType: Kubernetes
+  type: KubernetesDirect
+  spec:
+    connectorRef: harnessk8sconnector
+    namespace: test-dev
+    releaseName: release-<+INFRA_KEY_SHORT_ID>
+  allowSimultaneousDeployments: false
