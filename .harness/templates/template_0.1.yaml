@@ -1,5 +1,5 @@
 template:
-  name: template
+  name: template_updated
   identifier: template
   versionLabel: "0.1"
   type: Pipeline
