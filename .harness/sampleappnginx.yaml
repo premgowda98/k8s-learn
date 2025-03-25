@@ -1,0 +1,74 @@
+pipeline:
+  name: sample-app-nginx
+  identifier: sampleappnginx
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Test Approve
+        identifier: Test_Approve
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  name: approval needed
+                  identifier: approval_needed
+                  type: HarnessApproval
+                  timeout: 1d
+                  spec:
+                    approvalMessage: |-
+                      Please review the following information
+                      and approve the pipeline progression
+                    includePipelineExecutionHistory: true
+                    approvers:
+                      minimumCount: 1
+                      disallowPipelineExecutor: false
+                      userGroups:
+                        - account._account_all_users
+                    isAutoRejectEnabled: false
+                    approverInputs: []
+        tags: {}
+    - stage:
+        name: deploy sample app
+        identifier: deploy_sample_app
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: sampleappnginx
+          environment:
+            environmentRef: testdev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: k8stestdev
+          execution:
+            steps:
+              - step:
+                  name: Rollout Deployment
+                  identifier: rolloutDeployment
+                  type: K8sRollingDeploy
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+            rollbackSteps:
+              - step:
+                  name: Rollback Rollout Deployment
+                  identifier: rollbackRolloutDeployment
+                  type: K8sRollingRollback
+                  timeout: 10m
+                  spec:
+                    pruningEnabled: false
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
+        delegateSelectors:
+          - kubernetes-delegate
