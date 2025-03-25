@@ -1,5 +1,5 @@
 pipeline:
-  name: sample-app-nginx
+  name: sample-app-nginx-git
   identifier: sampleappnginx
   projectIdentifier: default_project
   orgIdentifier: default
