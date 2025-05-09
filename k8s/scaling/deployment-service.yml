@@ -19,8 +19,10 @@ spec:
         resources:
           limits:
             cpu: 500m
-          requests:
+            memory: 1Gi
+          requests: # HPA uses request resource to decide to scale
             cpu: 200m
+            memory: 512Mi
 ---
 apiVersion: v1
 kind: Service
